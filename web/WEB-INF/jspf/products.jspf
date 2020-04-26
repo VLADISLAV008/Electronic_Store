@@ -1,0 +1,44 @@
+<%--===========================================================================
+List of roducts.
+===========================================================================--%>
+
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<% request.getSession(); %>
+<div>
+    <table border="0">
+        <c:set var="count" value="0"/>
+        <c:forEach var="product" items="${sessionScope.products}">
+            <c:if test="${count%3 == 0}">
+                <tr>
+            </c:if>
+            <td>
+                <table border="1" width="300">
+                    <tr>
+                        <img src="${pageContext.request.contextPath}/resources/productPictures/${product.id}.PNG" alt="image.png" width="300" height="300" />
+                    </tr>
+                    <tr>
+                        <td>Name: ${product.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Price: ${product.price}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount: ${product.amount}</td>
+                    </tr>
+                </table>
+            </td>
+            <c:if test="${count%3 == 2}">
+                </tr>
+            </c:if>
+
+            <c:set var="count" value="${count+1}"/>
+
+        </c:forEach>
+
+        <c:if test="${count%3 != 0}">
+            </tr>
+        </c:if>
+    </table>
+</div>

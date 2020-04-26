@@ -1,0 +1,31 @@
+<%--=========================================================================== 
+Header (top area). 
+===========================================================================--%>
+
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<div>
+    <h1>3D Print</h1>
+</div>
+
+<div>   <!-- content -->
+
+    <c:if test="${not empty sessionScope.user}">
+        <div>
+                ${sessionScope.user.email}
+            <a href="${pageContext.request.contextPath}/logout">Logout</a>
+        </div>
+    </c:if>
+
+    <c:if test="${empty sessionScope.user}">
+        <div>    <!-- buttons holder -->
+            <a href="${pageContext.request.contextPath}/login">Login</a>
+            <a href="${pageContext.request.contextPath}/signUp">Sign Up</a>
+        </div>
+    </c:if>
+
+</div>
+
+<hr>
+

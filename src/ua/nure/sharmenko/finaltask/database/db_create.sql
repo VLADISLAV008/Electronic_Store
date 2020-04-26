@@ -1,0 +1,84 @@
+USE electronic_store;
+
+DROP TABLE IF EXISTS orders_products;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS statuses;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+
+CREATE TABLE roles
+(
+    id   INT UNSIGNED NOT NULL,
+    name VARCHAR(10)  NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+INSERT INTO roles
+VALUES (0, 'client');
+INSERT INTO roles
+VALUES (1, 'admin');
+
+
+CREATE TABLE users
+(
+    id       INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email    VARCHAR(50)  NOT NULL UNIQUE,
+    password VARCHAR(50)  NOT NULL,
+    roleId   INT UNSIGNED NOT NULL,
+    name     VARCHAR(50) DEFAULT NULL,
+    surname  VARCHAR(50) DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `roleId=id` FOREIGN KEY (roleId) REFERENCES roles (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+CREATE TABLE statuses
+(
+    id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50)  NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+CREATE TABLE orders
+(
+    id       INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    userId   INT UNSIGNED NOT NULL,
+    statusId INT UNSIGNED NOT NULL,
+    bill     INT UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `userId=id` FOREIGN KEY (userId) REFERENCES users (id),
+    CONSTRAINT `statusId=id` FOREIGN KEY (statusId) REFERENCES statuses (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+CREATE TABLE products
+(
+    id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name   VARCHAR(50)  NOT NULL UNIQUE,
+    price  INT UNSIGNED NOT NULL,
+    amount INT UNSIGNED DEFAULT 0,
+    PRIMARY KEY (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+CREATE TABLE orders_products
+(
+    orderId   INT UNSIGNED NOT NULL,
+    productId INT UNSIGNED NOT NULL,
+    amount    INT UNSIGNED NOT NULL,
+    PRIMARY KEY (orderId, productId),
+    CONSTRAINT `orderId=id` FOREIGN KEY (orderId) REFERENCES orders (id),
+    CONSTRAINT `productId=id` FOREIGN KEY (productId) REFERENCES products (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
+

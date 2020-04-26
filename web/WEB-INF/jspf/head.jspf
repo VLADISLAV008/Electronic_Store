@@ -1,0 +1,20 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<head>
+    <title>
+        <jsp:useBean id="Names" scope="application" class="ua.nure.sharmenko.finaltask.constants.Names"/>
+        <c:out value="${Names.title}"/>
+    </title>
+
+<%--    &lt;%&ndash;=========================================================================== --%>
+<%--    Bind CSS document.--%>
+<%--    ===========================================================================&ndash;%&gt;--%>
+<%--    <link rel="stylesheet" type="text/css" media="screen" href="style/st4.css"/>--%>
+
+<%--    &lt;%&ndash;=========================================================================== --%>
+<%--    If you define http-equiv attribute, set the content type and the charset the same--%>
+<%--    as you set them in a page directive.--%>
+<%--    ===========================================================================&ndash;%&gt;--%>
+<%--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--%>
+</head>
