@@ -7,31 +7,32 @@ Menu bar.
 
 <% request.getSession(); %>
 <div>
-    <table border="1">
-        <tr>
+    <table border="0" cellspacing="10" cellpadding="7">
+        <tr bgcolor="#6495ed">
             <td>
                 Total products: ${sessionScope.products.size()}
             </td>
             <td>
-                <div style="vertical-align: middle">
-                    <div style="float: left;">Sort:</div>
-                    <div style="float: right;">
-                        <form action="${pageContext.request.contextPath}/mainPage" method="get">
+                <form action="${pageContext.request.contextPath}/mainPage" method="get">
+                        <div style="float: left;">Sort:</div>
+                        <div style="float: right;">
                             <select id="method" name="sortMethod" onchange="this.form.submit()">
                                 <c:forEach var="criterion" items="${sessionScope.criteriaSortingProducts.list}">
                                     <option value="${criterion.name}"
                                             <c:if test="${criterion.selected}">
+                                                <c:if test="${criterion.name != \"null\"}">
+                                                    hidden
+                                                </c:if>
                                                 selected
                                             </c:if>
-                                            <c:if test="${criterion.name == \"null\"}">
+                                            <c:if test="${criterion.name.equals(\"null\")}">
                                                 disabled hidden
                                             </c:if>
                                     >${criterion.webText}</option>
                                 </c:forEach>
                             </select>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+                </form>
             </td>
         </tr>
     </table>

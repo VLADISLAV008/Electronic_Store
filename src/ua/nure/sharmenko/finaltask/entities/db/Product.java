@@ -6,6 +6,7 @@ public class Product extends Entity {
     private String name;
     private Integer price;
     private Integer amount;
+    private Integer categoryId;
 
     public Product() {
     }
@@ -32,5 +33,13 @@ public class Product extends Entity {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 }

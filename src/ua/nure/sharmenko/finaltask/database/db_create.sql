@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS statuses;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS categories;
 
 CREATE TABLE roles
 (
@@ -16,20 +17,14 @@ CREATE TABLE roles
   CHARACTER SET utf8,
   COLLATE utf8_bin;
 
-INSERT INTO roles
-VALUES (0, 'client');
-INSERT INTO roles
-VALUES (1, 'admin');
-
-
 CREATE TABLE users
 (
     id       INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    email    VARCHAR(50)  NOT NULL UNIQUE,
-    password VARCHAR(50)  NOT NULL,
+    email    VARCHAR(30)  NOT NULL UNIQUE,
+    password VARCHAR(30)  NOT NULL,
     roleId   INT UNSIGNED NOT NULL,
-    name     VARCHAR(50) DEFAULT NULL,
-    surname  VARCHAR(50) DEFAULT NULL,
+    name     VARCHAR(30) DEFAULT NULL,
+    surname  VARCHAR(30) DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `roleId=id` FOREIGN KEY (roleId) REFERENCES roles (id)
 ) ENGINE = INNODB,
@@ -39,7 +34,7 @@ CREATE TABLE users
 CREATE TABLE statuses
 (
     id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50)  NOT NULL UNIQUE,
+    name VARCHAR(30)  NOT NULL UNIQUE,
     PRIMARY KEY (id)
 ) ENGINE = INNODB,
   CHARACTER SET utf8,
@@ -58,12 +53,23 @@ CREATE TABLE orders
   CHARACTER SET utf8,
   COLLATE utf8_bin;
 
+CREATE TABLE categories
+(
+    id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30)  NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE = INNODB,
+  CHARACTER SET utf8,
+  COLLATE utf8_bin;
+
 CREATE TABLE products
 (
-    id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name   VARCHAR(50)  NOT NULL UNIQUE,
-    price  INT UNSIGNED NOT NULL,
-    amount INT UNSIGNED DEFAULT 0,
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name       VARCHAR(30)  NOT NULL UNIQUE,
+    price      INT UNSIGNED NOT NULL,
+    amount     INT UNSIGNED DEFAULT 0,
+    categoryId INT UNSIGNED NOT NULL,
+    CONSTRAINT `categoryId=id` FOREIGN KEY (categoryId) REFERENCES categories (id),
     PRIMARY KEY (id)
 ) ENGINE = INNODB,
   CHARACTER SET utf8,

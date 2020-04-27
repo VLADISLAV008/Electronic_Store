@@ -2,6 +2,7 @@ package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Path;
+import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @WebServlet("/mainPage")
 public class MainPageServlet extends HttpServlet {
@@ -26,6 +30,11 @@ public class MainPageServlet extends HttpServlet {
         HttpSession session = req.getSession();
         CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
         csp.changeSelectedCriterion(sortMethod);
+        Comparator<Product> comparator = csp.getComparator(sortMethod);
+
+        if (comparator != null) {
+            ((List<Product>) session.getAttribute("products")).sort(comparator);
+        }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
         requestDispatcher.forward(req, resp);

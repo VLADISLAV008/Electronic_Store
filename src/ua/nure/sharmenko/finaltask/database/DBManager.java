@@ -3,6 +3,7 @@ package ua.nure.sharmenko.finaltask.database;
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Messages;
 import ua.nure.sharmenko.finaltask.constants.Urls;
+import ua.nure.sharmenko.finaltask.entities.db.Category;
 import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.entities.db.User;
 import ua.nure.sharmenko.finaltask.exception.DBException;
@@ -156,7 +157,39 @@ public final class DBManager {
         product.setName(rs.getString("name"));
         product.setPrice(rs.getInt("price"));
         product.setAmount(rs.getInt("amount"));
+        product.setCategoryId(rs.getInt("categoryId"));
         return product;
+    }
+
+    public List<Category> selectAllCategories() throws DBException {
+        LOG.debug("Try to select all categories from database.");
+        ArrayList<Category> categories = new ArrayList<>();
+        Connection con = null;
+        Statement statement = null;
+        ResultSet res = null;
+        try {
+            con = getConnection();
+            statement = con.createStatement();
+            res = statement.executeQuery(SqlQueries.SQL_SELECT_ALL_CATEGORIES);
+
+            while (res.next()) {
+                Category category = extractCategory(res);
+                categories.add(category);
+            }
+        } catch (SQLException ex) {
+            LOG.error(Messages.ERR_SELECT_CATEGORIES, ex);
+            throw new DBException(Messages.ERR_SELECT_CATEGORIES, ex);
+        } finally {
+            close(con, statement, res);
+        }
+        return categories;
+    }
+
+    private static Category extractCategory(ResultSet rs) throws SQLException {
+        Category category = new Category();
+        category.setId(rs.getLong("id"));
+        category.setName(rs.getString("name"));
+        return category;
     }
 
     /**

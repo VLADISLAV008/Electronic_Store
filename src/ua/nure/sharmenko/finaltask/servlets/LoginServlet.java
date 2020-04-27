@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath() + "/mainPage");
+            resp.sendRedirect(Path.MAIN_PAGE);
 
             LOG.trace("The user " + user + " is log in.");
         } catch (AppException e) {

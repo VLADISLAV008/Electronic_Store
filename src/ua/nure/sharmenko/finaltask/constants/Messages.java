@@ -25,7 +25,9 @@ public final class Messages {
 
 	public static final String ERR_USER_NOT_EXIST = "User with such login/password doesn't exist.";
 
-	public static final String ERR_SELECT_PRODUCTS = "Sorry, an error occurred while loading product information.";
+	public static final String ERR_SELECT_PRODUCTS = "Sorry, an error occurred while loading products information.";
+
+	public static final String ERR_SELECT_CATEGORIES = "Sorry, an error occurred while loading categories.";
 
 
 
@@ -52,5 +54,8 @@ public final class Messages {
 	public static final String ERR_CANNOT_UPDATE_USER = "Cannot update a user";
 
 	public static final String ERR_CANNOT_OBTAIN_DATA_SOURCE = "Cannot obtain the data source";
-	
+
+	public String getERR_SELECT_CATEGORIES() {
+		return ERR_CANNOT_OBTAIN_DATA_SOURCE;
+	}
 }

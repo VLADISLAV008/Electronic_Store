@@ -7,14 +7,36 @@
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 
 <body>
-<!-- header -->
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
 
-<!-- menu bar -->
-<%@ include file="/WEB-INF/jspf/menuBar.jsp" %>
+<table>
+    <tr>
+        <td>
+            <!-- header -->
+            <%@ include file="/WEB-INF/jspf/header.jspf" %>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#f0f8ff" valign="top">
+            <!-- categories table -->
+            <%@ include file="/WEB-INF/jspf/categories.jspf" %>
+        </td>
+        <td bgcolor="#f0ffff">
+            <!-- menu bar -->
+            <%@ include file="/WEB-INF/jspf/menuBar.jspf" %>
 
-<!-- products table -->
-<%@ include file="/WEB-INF/jspf/products.jspf" %>
+            <c:if test="${empty sessionScope.content}">
+                <!-- products table -->
+                <%@ include file="/WEB-INF/jspf/products.jspf" %>
+            </c:if>
+
+            <c:if test="${not empty sessionScope.content}">
+                <!-- content -->
+<%--                <%@ include file="/WEB-INF/jsp/login.jsp" %>--%>
+<%--                <jsp:include page="${sessionScope.content}" />--%>
+            </c:if>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>

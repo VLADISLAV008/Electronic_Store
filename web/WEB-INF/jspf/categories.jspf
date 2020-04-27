@@ -1,0 +1,28 @@
+<%--===========================================================================
+Menu bar.
+===========================================================================--%>
+
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<% request.getSession(); %>
+<div>
+    <table border="0" cellspacing="10" cellpadding="7">
+        <tr>
+            <td>
+                <h1>
+                    Catalogue of goods
+                </h1>
+            </td>
+        </tr>
+
+        <c:forEach var="category" items="${sessionScope.categories}">
+            <tr>
+                <td bgcolor="#90ee90">
+                        ${category.name}
+                </td>
+            </tr>
+        </c:forEach>
+
+    </table>
+</div>

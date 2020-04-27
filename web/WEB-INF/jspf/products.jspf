@@ -22,7 +22,7 @@ List of roducts.
                         <td>Name: ${product.name}</td>
                     </tr>
                     <tr>
-                        <td>Price: ${product.price}</td>
+                        <td>Price: ${product.price} UAH</td>
                     </tr>
                     <tr>
                         <td>Amount: ${product.amount}</td>
