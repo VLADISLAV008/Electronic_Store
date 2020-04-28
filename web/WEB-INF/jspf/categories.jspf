@@ -15,11 +15,15 @@ Menu bar.
                 </h1>
             </td>
         </tr>
-
+        <style>
+            a {
+                text-decoration: none;
+            }
+        </style>
         <c:forEach var="category" items="${sessionScope.categories}">
             <tr>
                 <td bgcolor="#90ee90">
-                        ${category.name}
+                    <a href="${pageContext.request.contextPath}/mainPage?categoryId=${category.id}">${category.name}</a>
                 </td>
             </tr>
         </c:forEach>

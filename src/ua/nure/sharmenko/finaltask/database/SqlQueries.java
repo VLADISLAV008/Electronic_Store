@@ -9,6 +9,6 @@ public final class SqlQueries {
      */
     public static final String SQL_INSERT_USER = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?, ?, ?)";
     public static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
-    public static final String SQL_SELECT_ALL_PRODUCTS = "SELECT * FROM products";
+    public static final String SQL_SELECT_PRODUCTS_BY_CATEGORY = "SELECT * FROM products WHERE categoryId=?";
     public static final String SQL_SELECT_ALL_CATEGORIES = "SELECT * FROM categories";
 }

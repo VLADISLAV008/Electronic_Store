@@ -127,16 +127,17 @@ public final class DBManager {
         return user;
     }
 
-    public List<Product> selectAllProducts() throws DBException {
-        LOG.debug("Try to select all products from database.");
+    public List<Product> selectProductsByCategory(long categoryId) throws DBException {
+        LOG.debug("Try to select products by category with id = " + categoryId + " from database.");
         ArrayList<Product> products = new ArrayList<>();
         Connection con = null;
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         ResultSet res = null;
         try {
             con = getConnection();
-            statement = con.createStatement();
-            res = statement.executeQuery(SqlQueries.SQL_SELECT_ALL_PRODUCTS);
+            preparedStatement = con.prepareStatement(SqlQueries.SQL_SELECT_PRODUCTS_BY_CATEGORY);
+            preparedStatement.setString(1, Long.toString(categoryId));
+            res = preparedStatement.executeQuery();
 
             while (res.next()) {
                 Product product = extractProduct(res);
@@ -146,7 +147,7 @@ public final class DBManager {
             LOG.error(Messages.ERR_SELECT_PRODUCTS, ex);
             throw new DBException(Messages.ERR_SELECT_PRODUCTS, ex);
         } finally {
-            close(con, statement, res);
+            close(con, preparedStatement, res);
         }
         return products;
     }

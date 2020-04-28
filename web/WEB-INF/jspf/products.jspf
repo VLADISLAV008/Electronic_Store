@@ -16,16 +16,28 @@ List of roducts.
             <td>
                 <table border="1" width="300">
                     <tr>
-                        <img src="${pageContext.request.contextPath}/resources/productPictures/${product.id}.PNG" alt="image.png" width="300" height="300" />
+                        <img src="${pageContext.request.contextPath}/resources/productPictures/${product.id}.PNG"
+                             alt="image.png" width="300" height="300"/>
                     </tr>
                     <tr>
                         <td>Name: ${product.name}</td>
                     </tr>
                     <tr>
                         <td>Price: ${product.price} UAH</td>
+                        <c:if test="${product.amount > 0}">
+                            <td>
+                                <button type="submit" style="background-color: cadetblue">Add to cart</button>
+                            </td>
+                        </c:if>
                     </tr>
                     <tr>
-                        <td>Amount: ${product.amount}</td>
+                        <td>Size:</td>
+                        <c:if test="${product.amount > 0}">
+                            <td>Are available</td>
+                        </c:if>
+                        <c:if test="${product.amount == 0}">
+                            <td> Not available</td>
+                        </c:if>
                     </tr>
                 </table>
             </td>

@@ -5,26 +5,42 @@ Header (top area).
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
+
 <div>
     <h1>3D Print</h1>
 </div>
 
-<div>   <!-- content -->
-
-    <c:if test="${not empty sessionScope.user}">
-        <div>
-                ${sessionScope.user.email}
-            <a href="${pageContext.request.contextPath}/logout">Logout</a>
-        </div>
-    </c:if>
-
-    <c:if test="${empty sessionScope.user}">
-        <div>    <!-- buttons holder -->
-            <a href="${pageContext.request.contextPath}/login">Login</a>
-            <a href="${pageContext.request.contextPath}/signUp">Sign Up</a>
-        </div>
-    </c:if>
-
+<div>   <!-- header -->
+    <table cellspacing="15">
+        <tr>
+            <td>
+                <table cellspacing="5" bgcolor="#6495ed">
+                    <tr>
+                        <td><img src="${pageContext.request.contextPath}/resources/images/korzina.PNG" alt="image.png"
+                                 width="70" height="70"></td>
+                        <td><p>Your basket is empty</p></td>
+                    </tr>
+                </table>
+            </td>
+            <c:if test="${not empty sessionScope.user}">
+                <td>
+                        ${sessionScope.user.email}
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                </td>
+            </c:if>
+            <c:if test="${empty sessionScope.user}">
+                <!-- buttons holder -->
+                <td>
+                    <a href="${pageContext.request.contextPath}/login">Login</a>
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/signUp">Sign Up</a>
+                </td>
+            </c:if>
+        </tr>
+    </table>
 </div>
 
 <hr>

@@ -1,0 +1,52 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<div>   <!-- content -->
+    <form action="${pageContext.request.contextPath}/signUp" method="post">
+        <table border="0">
+            <tr>
+                <td>
+                    Email:
+                </td>
+                <td>
+                    <input type="text" name="email"><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password:
+                </td>
+                <td>
+                    <input type="password" name="pass"><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name:
+                </td>
+                <td>
+                    <input type="text" name="name"><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Surname:
+                </td>
+                <td>
+                    <input type="text" name="surname"><br/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" valign="center">
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <c:if test="${not empty requestScope.message}">
+        <div>
+            <h1>${requestScope.message}</h1>
+        </div>
+    </c:if>
+</div>

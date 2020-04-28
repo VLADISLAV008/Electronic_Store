@@ -1,6 +1,7 @@
 package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Messages;
 import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
@@ -23,7 +24,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.LOGIN);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
+        req.getSession().setAttribute("content", Content.LOGIN);
         requestDispatcher.forward(req, resp);
     }
 
@@ -47,7 +49,8 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect(Path.MAIN_PAGE);
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
+            resp.sendRedirect(req.getContextPath() + "/mainPage");
 
             LOG.trace("The user " + user + " is log in.");
         } catch (AppException e) {
@@ -55,7 +58,7 @@ public class LoginServlet extends HttpServlet {
             LOG.debug(e.getMessage());
 
             req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(Path.LOGIN).forward(req, resp);
+            req.getRequestDispatcher(Path.MAIN_PAGE).forward(req, resp);
         }
     }
 }

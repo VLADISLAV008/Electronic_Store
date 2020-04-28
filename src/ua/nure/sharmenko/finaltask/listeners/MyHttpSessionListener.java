@@ -1,6 +1,8 @@
 package ua.nure.sharmenko.finaltask.listeners;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
+import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.entities.db.Category;
 import ua.nure.sharmenko.finaltask.entities.db.Entity;
@@ -26,14 +28,17 @@ public class MyHttpSessionListener implements HttpSessionListener {
         HttpSession session = se.getSession();
         session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
 
+        session.setAttribute("content", Content.PRODUCTS_CONTENT);
         try {
-            List<Product> products = DBManager.getInstance().selectAllProducts();
-            session.setAttribute("products", products);
-            LOG.trace("List of products is added to the session scope.");
             List<Category> categories = DBManager.getInstance().selectAllCategories();
             categories.sort(Comparator.comparing(Entity::getId));
             session.setAttribute("categories", categories);
             LOG.trace("List of categories is added to the session scope.");
+
+            List<Product> products = DBManager.getInstance().selectProductsByCategory(categories.get(0).getId());
+            session.setAttribute("products", products);
+            LOG.trace("List of products is added to the session scope.");
+
         } catch (DBException e) {
             LOG.debug("Cannot select products/categories from DB.");
             LOG.debug(e.getMessage());

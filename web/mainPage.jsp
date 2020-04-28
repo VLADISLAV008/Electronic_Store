@@ -8,9 +8,9 @@
 
 <body>
 
-<table>
+<table cellspacing="0">
     <tr>
-        <td>
+        <td colspan="2">
             <!-- header -->
             <%@ include file="/WEB-INF/jspf/header.jspf" %>
         </td>
@@ -20,19 +20,20 @@
             <!-- categories table -->
             <%@ include file="/WEB-INF/jspf/categories.jspf" %>
         </td>
-        <td bgcolor="#f0ffff">
-            <!-- menu bar -->
-            <%@ include file="/WEB-INF/jspf/menuBar.jspf" %>
-
-            <c:if test="${empty sessionScope.content}">
-                <!-- products table -->
-                <%@ include file="/WEB-INF/jspf/products.jspf" %>
+        <td bgcolor="#f0ffff" valign="left" width="100%">
+            <c:if test="${sessionScope.content == \"login\"}">
+                <!-- login content -->
+                <%@ include file="/WEB-INF/jspf/login.jspf" %>
             </c:if>
 
-            <c:if test="${not empty sessionScope.content}">
-                <!-- content -->
-<%--                <%@ include file="/WEB-INF/jsp/login.jsp" %>--%>
-<%--                <jsp:include page="${sessionScope.content}" />--%>
+            <c:if test="${sessionScope.content == \"productsContent\"}">
+                <!-- products content -->
+                <%@ include file="/WEB-INF/jspf/productsContent.jspf" %>
+            </c:if>
+
+            <c:if test="${sessionScope.content == \"signUp\"}">
+                <!-- sign up content -->
+                <%@ include file="/WEB-INF/jspf/signUp.jspf" %>
             </c:if>
         </td>
     </tr>

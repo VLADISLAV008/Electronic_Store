@@ -1,0 +1,6 @@
+
+<!-- menu bar -->
+<%@ include file="/WEB-INF/jspf/menuBar.jspf" %>
+
+<!-- products table -->
+<%@ include file="/WEB-INF/jspf/products.jspf" %>

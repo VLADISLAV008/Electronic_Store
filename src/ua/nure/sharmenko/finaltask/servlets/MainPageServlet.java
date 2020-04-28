@@ -1,9 +1,12 @@
 package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Path;
+import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
+import ua.nure.sharmenko.finaltask.exception.DBException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +30,30 @@ public class MainPageServlet extends HttpServlet {
         String sortMethod = req.getParameter("sortMethod");
         LOG.trace("Sorting criterion - " + sortMethod);
 
+        Long categoryId = null;
+        try {
+            categoryId = Long.parseLong(req.getParameter("categoryId"));
+            LOG.trace("Category id - " + categoryId);
+        } catch (NumberFormatException e) {
+            LOG.trace("Category id invalid.");
+        }
+
         HttpSession session = req.getSession();
+
+        if (categoryId != null) {
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
+            List<Product> products;
+            try {
+                products = DBManager.getInstance().selectProductsByCategory(categoryId);
+                session.setAttribute("products", products);
+                ((CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts")).changeSelectedCriterion("null");
+                LOG.trace("List of products is added to the session scope.");
+            } catch (DBException e) {
+                LOG.debug("Cannot select products from DB.");
+                LOG.debug(e.getMessage());
+            }
+        }
+
         CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
         csp.changeSelectedCriterion(sortMethod);
         Comparator<Product> comparator = csp.getComparator(sortMethod);

@@ -1,6 +1,7 @@
 package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.entities.db.User;
@@ -22,7 +23,8 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.SIGN_UP);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
+        req.getSession().setAttribute("content", Content.SIGN_UP);
         requestDispatcher.forward(req, resp);
     }
 
@@ -42,6 +44,7 @@ public class SignUpServlet extends HttpServlet {
             DBManager.getInstance().insertUser(user);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
             resp.sendRedirect(req.getContextPath() + "/mainPage");
 
             LOG.trace("The user " + user + " is signed up.");
@@ -50,7 +53,7 @@ public class SignUpServlet extends HttpServlet {
             LOG.debug(e.getMessage());
 
             req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(Path.SIGN_UP).forward(req, resp);
+            req.getRequestDispatcher(Path.MAIN_PAGE).forward(req, resp);
         }
     }
 }
