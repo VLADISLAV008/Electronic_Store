@@ -23,8 +23,8 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.invalidate();
         LOG.debug("Session invalidate.");
-        req.getSession().setAttribute("content", Content.PRODUCTS_CONTENT);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
+        req.setAttribute("content", Content.PRODUCTS_CONTENT);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/mainPage");
         requestDispatcher.forward(req, resp);
     }
 }

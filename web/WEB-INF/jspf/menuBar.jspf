@@ -10,7 +10,7 @@ Menu bar.
     <table border="0" cellspacing="10" cellpadding="7">
         <tr bgcolor="#6495ed">
             <td>
-                Total products: ${sessionScope.products.size()}
+                Total products: ${requestScope.products.size()}
             </td>
             <td>
                 <form action="${pageContext.request.contextPath}/mainPage" method="get">

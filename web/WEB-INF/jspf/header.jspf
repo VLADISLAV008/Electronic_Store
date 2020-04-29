@@ -11,7 +11,7 @@ Header (top area).
 </div>
 
 <div>   <!-- header -->
-    <table cellspacing="15">
+    <table cellspacing="7">
         <tr>
             <td>
                 <table cellspacing="5" bgcolor="#6495ed">

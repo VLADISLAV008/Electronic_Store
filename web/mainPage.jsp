@@ -8,6 +8,10 @@
 
 <body>
 
+<c:if test="${empty requestScope.content}">
+    <c:redirect url="/mainPage"/>
+</c:if>
+
 <table cellspacing="0">
     <tr>
         <td colspan="2">
@@ -21,17 +25,17 @@
             <%@ include file="/WEB-INF/jspf/categories.jspf" %>
         </td>
         <td bgcolor="#f0ffff" valign="left" width="100%">
-            <c:if test="${sessionScope.content == \"login\"}">
+            <c:if test="${requestScope.content == \"login\"}">
                 <!-- login content -->
                 <%@ include file="/WEB-INF/jspf/login.jspf" %>
             </c:if>
 
-            <c:if test="${sessionScope.content == \"productsContent\"}">
+            <c:if test="${requestScope.content == \"productsContent\"}">
                 <!-- products content -->
                 <%@ include file="/WEB-INF/jspf/productsContent.jspf" %>
             </c:if>
 
-            <c:if test="${sessionScope.content == \"signUp\"}">
+            <c:if test="${requestScope.content == \"signUp\"}">
                 <!-- sign up content -->
                 <%@ include file="/WEB-INF/jspf/signUp.jspf" %>
             </c:if>

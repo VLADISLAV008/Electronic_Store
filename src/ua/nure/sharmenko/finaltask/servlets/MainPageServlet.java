@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
+import ua.nure.sharmenko.finaltask.database.Loader;
+import ua.nure.sharmenko.finaltask.entities.db.Category;
 import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 import ua.nure.sharmenko.finaltask.exception.DBException;
@@ -16,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,39 +28,67 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sortMethod = req.getParameter("sortMethod");
-        LOG.trace("Sorting criterion - " + sortMethod);
+        HttpSession session = req.getSession();
+        req.setAttribute("content", Content.PRODUCTS_CONTENT);
 
+        // Load categories from db
+        LOG.debug("Try to select categories from DB.");
+        List<Category> categories = Loader.loadCategories();
+        req.setAttribute("categories", categories);
+
+        // Parse category
         Long categoryId = null;
         try {
             categoryId = Long.parseLong(req.getParameter("categoryId"));
+            session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
             LOG.trace("Category id - " + categoryId);
         } catch (NumberFormatException e) {
             LOG.trace("Category id invalid.");
         }
+        if (categoryId == null) {
+            if (categories != null) {
+                categoryId = categories.get(0).getId();
+            }
+        }
+        LOG.trace("Category id = " + categoryId);
 
-        HttpSession session = req.getSession();
+        // Load products from db
+        LOG.debug("Try to select products by categoryId = " + categoryId + " from DB.");
+        List<Product> products = Loader.loadProducts(categoryId);
+        req.setAttribute("products", products);
 
-        if (categoryId != null) {
-            session.setAttribute("content", Content.PRODUCTS_CONTENT);
-            List<Product> products;
-            try {
-                products = DBManager.getInstance().selectProductsByCategory(categoryId);
-                session.setAttribute("products", products);
-                ((CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts")).changeSelectedCriterion("null");
-                LOG.trace("List of products is added to the session scope.");
-            } catch (DBException e) {
-                LOG.debug("Cannot select products from DB.");
-                LOG.debug(e.getMessage());
+        // Parse sort method
+        if (products != null) {
+            String sortMethod = req.getParameter("sortMethod");
+            LOG.trace("Sorting criterion - " + sortMethod);
+
+            CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
+            csp.changeSelectedCriterion(sortMethod);
+            Comparator<Product> comparator = csp.getComparator(sortMethod);
+
+            if (comparator != null) {
+                products.sort(comparator);
             }
         }
 
-        CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
-        csp.changeSelectedCriterion(sortMethod);
-        Comparator<Product> comparator = csp.getComparator(sortMethod);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
+        requestDispatcher.forward(req, resp);
+    }
 
-        if (comparator != null) {
-            ((List<Product>) session.getAttribute("products")).sort(comparator);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        // Add to cart new product
+        Long productId = null;
+        try {
+            productId = Long.parseLong(req.getParameter("productId"));
+            LOG.trace("Product id - " + productId);
+        } catch (NumberFormatException e) {
+            LOG.trace("Product id invalid.");
+        }
+
+        if (productId != null) {
         }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
