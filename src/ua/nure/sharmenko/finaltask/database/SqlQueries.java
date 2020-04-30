@@ -11,4 +11,5 @@ public final class SqlQueries {
     public static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
     public static final String SQL_SELECT_PRODUCTS_BY_CATEGORY = "SELECT * FROM products WHERE categoryId=?";
     public static final String SQL_SELECT_ALL_CATEGORIES = "SELECT * FROM categories";
+    public static final String SQL_SELECT_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
 }

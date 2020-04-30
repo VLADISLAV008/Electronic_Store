@@ -18,7 +18,7 @@ Header (top area).
                     <tr>
                         <td><img src="${pageContext.request.contextPath}/resources/images/korzina.PNG" alt="image.png"
                                  width="70" height="70"></td>
-                        <td><p>Your basket is empty</p></td>
+                        <td><p style="white-space: pre">${sessionScope.basketInfo}</p></td>
                     </tr>
                 </table>
             </td>

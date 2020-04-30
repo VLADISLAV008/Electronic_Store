@@ -18,9 +18,9 @@ public class CriteriaSortingProducts {
         list.add(new SortingCriterion("novelty", "by novelty", false, (o1, o2) -> -o1.getId().compareTo(o2.getId())));
     }
 
-    public Comparator<Product> getComparator(String name) {
+    public Comparator<Product> getComparator() {
         for (SortingCriterion criterion : list) {
-            if (criterion.getName().equals(name)) {
+            if (criterion.isSelected()) {
                 return criterion.getComparator();
             }
         }

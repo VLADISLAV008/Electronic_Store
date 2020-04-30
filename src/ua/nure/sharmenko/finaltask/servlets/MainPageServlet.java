@@ -2,11 +2,11 @@ package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Content;
+import ua.nure.sharmenko.finaltask.constants.Names;
 import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.database.Loader;
-import ua.nure.sharmenko.finaltask.entities.db.Category;
-import ua.nure.sharmenko.finaltask.entities.db.Product;
+import ua.nure.sharmenko.finaltask.entities.db.*;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 import ua.nure.sharmenko.finaltask.exception.DBException;
 
@@ -41,12 +41,15 @@ public class MainPageServlet extends HttpServlet {
         try {
             categoryId = Long.parseLong(req.getParameter("categoryId"));
             session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
+            session.setAttribute("categoryId", categoryId);
             LOG.trace("Category id - " + categoryId);
         } catch (NumberFormatException e) {
             LOG.trace("Category id invalid.");
         }
-        if (categoryId == null) {
-            if (categories != null) {
+        if (categoryId == null && categories != null) {
+            if (session.getAttribute("categoryId") != null) {
+                categoryId = (Long) session.getAttribute("categoryId");
+            } else {
                 categoryId = categories.get(0).getId();
             }
         }
@@ -64,7 +67,7 @@ public class MainPageServlet extends HttpServlet {
 
             CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
             csp.changeSelectedCriterion(sortMethod);
-            Comparator<Product> comparator = csp.getComparator(sortMethod);
+            Comparator<Product> comparator = csp.getComparator();
 
             if (comparator != null) {
                 products.sort(comparator);
@@ -89,9 +92,41 @@ public class MainPageServlet extends HttpServlet {
         }
 
         if (productId != null) {
-        }
+            Order order = (Order) session.getAttribute("order");
+            if (order == null) {
+                LOG.debug("Create a new order");
+                order = new Order();
+                session.setAttribute("order", order);
+            }
+            try {
+                Product product = DBManager.getInstance().findProductById(productId);
+                order.setBill(order.getBill() + product.getPrice());
+                int index = order.getProductsId().indexOf(productId);
+                if (index == -1) {
+                    order.getProductsId().add(productId);
+                    order.getQuantities().add(0);
+                    index = order.getQuantities().size() - 1;
+                }
+                int count = order.getQuantities().get(index);
+                order.getQuantities().set(index, count + 1);
+            } catch (DBException e) {
+                LOG.debug(e.getMessage());
+            }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        requestDispatcher.forward(req, resp);
+            if (order.getBill() == 0) {
+                session.setAttribute("basketInfo", Names.EMPTY_BASKET);
+            } else {
+                int count = order.getNumberProducts();
+                String info = Names.IN_YOUR_BASKET + count + " ";
+                if (count > 1) {
+                    info = info + Names.PRODUCTS;
+                } else {
+                    info = info + Names.PRODUCT;
+                }
+                info = info + " " + order.getBill() + " UAH";
+                session.setAttribute("basketInfo", info);
+            }
+        }
+        resp.sendRedirect(req.getContextPath() + "/mainPage");
     }
 }

@@ -24,9 +24,7 @@ public final class DBManager {
     private static final Logger LOG = Logger.getLogger(DBManager.class);
     private static DBManager instance;
 /*
-    private static final String SQL_FIND_ALL_USERS = "SELECT * FROM users";
     private static final String SQL_CREATE_TEAM = "INSERT INTO teams VALUES (DEFAULT, ?)";
-    private static final String SQL_FIND_ALL_TEAMS = "SELECT * FROM teams";
     private static final String SQL_GET_USER = "SELECT * FROM users WHERE login=?";
     private static final String SQL_GET_TEAM_BY_ID = "SELECT * FROM teams WHERE id=?";
     private static final String SQL_GET_TEAM = "SELECT * FROM teams WHERE name=?";
@@ -114,6 +112,29 @@ public final class DBManager {
             close(con, prepState, res);
         }
         return user;
+    }
+
+    public Product findProductById(Long id) throws DBException {
+        LOG.debug("Try to get product by id = " + id + " from database.");
+        Connection con = null;
+        PreparedStatement prepState = null;
+        ResultSet res = null;
+        Product product = null;
+        try {
+            con = getConnection();
+            prepState = con.prepareStatement(SqlQueries.SQL_SELECT_PRODUCT_BY_ID);
+            prepState.setString(1, Long.toString(id));
+            res = prepState.executeQuery();
+            if (res.next()) {
+                product = extractProduct(res);
+            }
+        } catch (SQLException ex) {
+            LOG.error(Messages.ERR_PRODUCT_NOT_EXIST, ex);
+            throw new DBException(Messages.ERR_PRODUCT_NOT_EXIST, ex);
+        } finally {
+            close(con, prepState, res);
+        }
+        return product;
     }
 
     private static User extractUser(ResultSet rs) throws SQLException {

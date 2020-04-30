@@ -1,6 +1,7 @@
 package ua.nure.sharmenko.finaltask.listeners;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Names;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 
 import javax.servlet.annotation.WebListener;
@@ -17,5 +18,6 @@ public class MyHttpSessionListener implements HttpSessionListener {
         LOG.debug("Session created.");
         HttpSession session = se.getSession();
         session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
+        session.setAttribute("basketInfo", Names.EMPTY_BASKET);
     }
 }

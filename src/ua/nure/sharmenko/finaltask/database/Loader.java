@@ -5,9 +5,7 @@ import ua.nure.sharmenko.finaltask.entities.db.Category;
 import ua.nure.sharmenko.finaltask.entities.db.Entity;
 import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.exception.DBException;
-import ua.nure.sharmenko.finaltask.servlets.LoginServlet;
 
-import javax.servlet.ServletRequest;
 import java.util.Comparator;
 import java.util.List;
 

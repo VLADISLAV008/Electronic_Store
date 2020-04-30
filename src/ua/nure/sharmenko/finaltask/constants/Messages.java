@@ -29,6 +29,8 @@ public final class Messages {
 
 	public static final String ERR_SELECT_CATEGORIES = "Sorry, an error occurred while loading categories.";
 
+	public static final String ERR_PRODUCT_NOT_EXIST = "Product with this id doesn't exist.";
+
 
 
 	public static final String ERR_CANNOT_OBTAIN_CATEGORIES = "Cannot obtain categories";

@@ -7,6 +7,7 @@ import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.database.Loader;
 import ua.nure.sharmenko.finaltask.entities.db.Category;
+import ua.nure.sharmenko.finaltask.entities.db.Order;
 import ua.nure.sharmenko.finaltask.entities.db.User;
 import ua.nure.sharmenko.finaltask.exception.AppException;
 
@@ -64,6 +65,15 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             req.setAttribute("content", Content.PRODUCTS_CONTENT);
+
+            Order order = (Order) session.getAttribute("order");
+            if (order == null) {
+                LOG.debug("Create a new order");
+                order = new Order();
+                session.setAttribute("order", order);
+            }
+            order.setUserId(user.getId());
+
             resp.sendRedirect(req.getContextPath() + "/mainPage");
 
             LOG.trace("The user " + user + " is log in.");
