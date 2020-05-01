@@ -2,11 +2,11 @@ package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Content;
-import ua.nure.sharmenko.finaltask.constants.Names;
 import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.database.Loader;
 import ua.nure.sharmenko.finaltask.entities.db.*;
+import ua.nure.sharmenko.finaltask.entities.web.BasketInfo;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 import ua.nure.sharmenko.finaltask.exception.DBException;
 
@@ -29,7 +29,7 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        req.setAttribute("content", Content.PRODUCTS_CONTENT);
+        session.setAttribute("content", Content.PRODUCTS_CONTENT);
 
         // Load categories from db
         LOG.debug("Try to select categories from DB.");
@@ -117,19 +117,7 @@ public class MainPageServlet extends HttpServlet {
                 LOG.debug(e.getMessage());
             }
 
-            if (order.getBill() == 0) {
-                session.setAttribute("basketInfo", Names.EMPTY_BASKET);
-            } else {
-                int count = order.getNumberProducts();
-                String info = Names.IN_YOUR_BASKET + count + " ";
-                if (count > 1) {
-                    info = info + Names.PRODUCTS;
-                } else {
-                    info = info + Names.PRODUCT;
-                }
-                info = info + " " + order.getBill() + " " + Names.CURRENCY;
-                session.setAttribute("basketInfo", info);
-            }
+            session.setAttribute("basketInfo", BasketInfo.getBasketInfo(order));
         }
         resp.sendRedirect(req.getContextPath() + "/mainPage");
     }

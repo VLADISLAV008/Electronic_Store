@@ -33,15 +33,20 @@ Cart
                                    value="${sessionScope.order.getProductById(productId)}"/>
                             <td align="center">
                                 <img src="${pageContext.request.contextPath}/resources/productPictures/${productId}.PNG"
-                                     alt="image.png" width="100" height="100"/>
+                                     alt="image.png" width="130" height="130"/>
                             </td>
                             <td align="center"><c:out value="${product.name}"/></td>
                             <td align="center"><c:out value="${orderedProduct.quantity}"/></td>
                             <td align="center"><c:out value="${product.price} ${Names.CURRENCY}"/></td>
                             <td align="center"><c:out
                                     value="${product.price*orderedProduct.quantity} ${Names.CURRENCY}"/></td>
-                            <td><img src="${pageContext.request.contextPath}/resources/images/delete.png"
-                                     alt="image.png" width="40" height="40"/>
+                            <td align="center">
+                                <form action="${pageContext.request.contextPath}/basket" method="post">
+                                    <button value="${product.id}" name="delete" type="submit">
+                                        <img src="${pageContext.request.contextPath}/resources/images/delete.png"
+                                             alt="image.png" width="20" height="20" style="vertical-align: middle"/>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

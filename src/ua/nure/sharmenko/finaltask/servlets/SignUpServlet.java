@@ -32,8 +32,8 @@ public class SignUpServlet extends HttpServlet {
         List<Category> categories = Loader.loadCategories();
         req.setAttribute("categories", categories);
 
+        req.getSession().setAttribute("content", Content.SIGN_UP);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        req.setAttribute("content", Content.SIGN_UP);
         requestDispatcher.forward(req, resp);
     }
 
@@ -58,7 +58,7 @@ public class SignUpServlet extends HttpServlet {
             DBManager.getInstance().insertUser(user);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            req.setAttribute("content", Content.PRODUCTS_CONTENT);
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
             LOG.trace("The user " + user + " is signed up.");
 
             Order order = (Order) session.getAttribute("order");

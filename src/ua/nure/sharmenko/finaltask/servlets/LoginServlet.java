@@ -33,8 +33,8 @@ public class LoginServlet extends HttpServlet {
         List<Category> categories = Loader.loadCategories();
         req.setAttribute("categories", categories);
 
+        req.getSession().setAttribute("content", Content.LOGIN);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        req.setAttribute("content", Content.LOGIN);
         requestDispatcher.forward(req, resp);
     }
 
@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            req.setAttribute("content", Content.PRODUCTS_CONTENT);
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
 
             Order order = (Order) session.getAttribute("order");
             if (order == null) {

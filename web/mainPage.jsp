@@ -8,7 +8,7 @@
 
 <body>
 
-<c:if test="${empty requestScope.content}">
+<c:if test="${empty sessionScope.content}">
     <c:redirect url="/mainPage"/>
 </c:if>
 
@@ -27,22 +27,22 @@
         <td bgcolor="#f0ffff" valign="left" width="100%">
             <jsp:useBean id="Content" scope="application" class="ua.nure.sharmenko.finaltask.constants.Content"/>
 
-            <c:if test="${requestScope.content.equals(Content.LOGIN)}">
+            <c:if test="${sessionScope.content.equals(Content.LOGIN)}">
                 <!-- login content -->
                 <%@ include file="/WEB-INF/jspf/login.jspf" %>
             </c:if>
 
-            <c:if test="${requestScope.content.equals(Content.productsContent)}">
+            <c:if test="${sessionScope.content.equals(Content.productsContent)}">
                 <!-- products content -->
                 <%@ include file="/WEB-INF/jspf/productsContent.jspf" %>
             </c:if>
 
-            <c:if test="${requestScope.content.equals(Content.signUp)}">
+            <c:if test="${sessionScope.content.equals(Content.signUp)}">
                 <!-- sign up content -->
                 <%@ include file="/WEB-INF/jspf/signUp.jspf" %>
             </c:if>
 
-            <c:if test="${requestScope.content.equals(Content.BASKET)}">
+            <c:if test="${sessionScope.content.equals(Content.BASKET)}">
                 <!-- basket content -->
                 <%@ include file="/WEB-INF/jspf/basket.jspf" %>
             </c:if>
