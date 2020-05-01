@@ -15,13 +15,18 @@ Header (top area).
         <tr>
             <td>
                 <table cellspacing="5" bgcolor="#6495ed">
-                    <tr>
-                        <td><img src="${pageContext.request.contextPath}/resources/images/korzina.PNG" alt="image.png"
-                                 width="70" height="70"></td>
-                        <td><p style="white-space: pre">${sessionScope.basketInfo}</p></td>
-                    </tr>
+                    <form action="${pageContext.request.contextPath}/basket" method="get" name="basket">
+                        <tr onclick="document.forms[0].submit()">
+                            <td>
+                                <img src="${pageContext.request.contextPath}/resources/images/korzina.PNG"
+                                     alt="image.png"
+                                     width="70" height="70"></td>
+                            <td><p style="white-space: pre">${sessionScope.basketInfo}</p></td>
+                        </tr>
+                    </form>
                 </table>
             </td>
+
             <c:if test="${not empty sessionScope.user}">
                 <td>
                         ${sessionScope.user.email}

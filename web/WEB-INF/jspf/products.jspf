@@ -28,7 +28,7 @@ List of roducts.
                                 <td>
                                     <p style="text-align: center">
                                         <button value="${product.id}" name="productId" type="submit"
-                                                style="background-color: cadetblue" onsubmit="">
+                                                style="background-color: cadetblue">
                                             <img src="${pageContext.request.contextPath}/resources/images/addToCart.png"
                                                  alt="image.png" width="20" height="20" style="vertical-align: middle">
                                             Add to cart

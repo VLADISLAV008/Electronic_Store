@@ -75,7 +75,6 @@ public class LoginServlet extends HttpServlet {
             order.setUserId(user.getId());
 
             resp.sendRedirect(req.getContextPath() + "/mainPage");
-
             LOG.trace("The user " + user + " is log in.");
         } catch (AppException e) {
             LOG.debug("Cannot log in the user.");

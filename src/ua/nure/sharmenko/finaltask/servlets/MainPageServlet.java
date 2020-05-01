@@ -101,14 +101,18 @@ public class MainPageServlet extends HttpServlet {
             try {
                 Product product = DBManager.getInstance().findProductById(productId);
                 order.setBill(order.getBill() + product.getPrice());
-                int index = order.getProductsId().indexOf(productId);
-                if (index == -1) {
-                    order.getProductsId().add(productId);
-                    order.getQuantities().add(0);
-                    index = order.getQuantities().size() - 1;
+                List<ProductOrderInfo> list = order.getOrderInfo();
+                boolean contain = false;
+                for (ProductOrderInfo el : list) {
+                    if (el.getProductId() == product.getId()) {
+                        el.setQuantity(el.getQuantity() + 1);
+                        contain = true;
+                        break;
+                    }
                 }
-                int count = order.getQuantities().get(index);
-                order.getQuantities().set(index, count + 1);
+                if (!contain) {
+                    list.add(new ProductOrderInfo(product.getId(), 1));
+                }
             } catch (DBException e) {
                 LOG.debug(e.getMessage());
             }
@@ -123,7 +127,7 @@ public class MainPageServlet extends HttpServlet {
                 } else {
                     info = info + Names.PRODUCT;
                 }
-                info = info + " " + order.getBill() + " UAH";
+                info = info + " " + order.getBill() + " " + Names.CURRENCY;
                 session.setAttribute("basketInfo", info);
             }
         }
