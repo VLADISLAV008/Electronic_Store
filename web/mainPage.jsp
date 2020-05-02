@@ -12,19 +12,20 @@
     <c:redirect url="/mainPage"/>
 </c:if>
 
-<table cellspacing="0">
+<table cellspacing="0" width="100%">
     <tr>
         <td colspan="2">
             <!-- header -->
             <%@ include file="/WEB-INF/jspf/header.jspf" %>
         </td>
+        <td width="100%"></td>
     </tr>
     <tr>
         <td bgcolor="#f0f8ff" valign="top">
             <!-- categories table -->
             <%@ include file="/WEB-INF/jspf/categories.jspf" %>
         </td>
-        <td bgcolor="#f0ffff" valign="left" width="100%">
+        <td bgcolor="#f0ffff" valign="center" width="100%">
             <jsp:useBean id="Content" scope="application" class="ua.nure.sharmenko.finaltask.constants.Content"/>
 
             <c:if test="${sessionScope.content.equals(Content.LOGIN)}">
@@ -45,6 +46,11 @@
             <c:if test="${sessionScope.content.equals(Content.BASKET)}">
                 <!-- basket content -->
                 <%@ include file="/WEB-INF/jspf/basket.jspf" %>
+            </c:if>
+
+            <c:if test="${sessionScope.content.equals(Content.placeOrderResultContent)}">
+                <!-- basket content -->
+                <%@ include file="/WEB-INF/jspf/placeOrderResult.jspf" %>
             </c:if>
         </td>
     </tr>

@@ -5,7 +5,6 @@ Menu bar.
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
-<% request.getSession(); %>
 <div>
     <table border="0" cellspacing="10" cellpadding="7">
         <tr bgcolor="#6495ed">
@@ -13,7 +12,7 @@ Menu bar.
                 Total products: ${requestScope.products.size()}
             </td>
             <td>
-                <form action="${pageContext.request.contextPath}/mainPage" method="get">
+                <form action="${pageContext.request.contextPath}/products" method="get">
                         <div style="float: left;">Sort:</div>
                         <div style="float: right;">
                             <select id="method" name="sortMethod" onchange="this.form.submit()">

@@ -29,96 +29,22 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("content", Content.PRODUCTS_CONTENT);
 
         // Load categories from db
         LOG.debug("Try to select categories from DB.");
         List<Category> categories = Loader.loadCategories();
         req.setAttribute("categories", categories);
 
-        // Parse category
-        Long categoryId = null;
-        try {
-            categoryId = Long.parseLong(req.getParameter("categoryId"));
-            session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
-            session.setAttribute("categoryId", categoryId);
-            LOG.trace("Category id - " + categoryId);
-        } catch (NumberFormatException e) {
-            LOG.trace("Category id invalid.");
+        String content = (String) session.getAttribute("content");
+        if (content == null || Content.PLACE_ORDER_RESULT_CONTENT.equals(content)) {
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
+            content = Content.PRODUCTS_CONTENT;
         }
-        if (categoryId == null && categories != null) {
-            if (session.getAttribute("categoryId") != null) {
-                categoryId = (Long) session.getAttribute("categoryId");
-            } else {
-                categoryId = categories.get(0).getId();
-            }
-        }
-        LOG.trace("Category id = " + categoryId);
-
-        // Load products from db
-        LOG.debug("Try to select products by categoryId = " + categoryId + " from DB.");
-        List<Product> products = Loader.loadProducts(categoryId);
-        req.setAttribute("products", products);
-
-        // Parse sort method
-        if (products != null) {
-            String sortMethod = req.getParameter("sortMethod");
-            LOG.trace("Sorting criterion - " + sortMethod);
-
-            CriteriaSortingProducts csp = (CriteriaSortingProducts) session.getAttribute("criteriaSortingProducts");
-            csp.changeSelectedCriterion(sortMethod);
-            Comparator<Product> comparator = csp.getComparator();
-
-            if (comparator != null) {
-                products.sort(comparator);
-            }
+        if (Content.PRODUCTS_CONTENT.equals(content)) {
+            req.getRequestDispatcher("/products").forward(req, resp);
+        } else {
+            req.getRequestDispatcher(Path.MAIN_PAGE).forward(req, resp);
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        requestDispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-
-        // Add to cart new product
-        Long productId = null;
-        try {
-            productId = Long.parseLong(req.getParameter("productId"));
-            LOG.trace("Product id - " + productId);
-        } catch (NumberFormatException e) {
-            LOG.trace("Product id invalid.");
-        }
-
-        if (productId != null) {
-            Order order = (Order) session.getAttribute("order");
-            if (order == null) {
-                LOG.debug("Create a new order");
-                order = new Order();
-                session.setAttribute("order", order);
-            }
-            try {
-                Product product = DBManager.getInstance().findProductById(productId);
-                order.setBill(order.getBill() + product.getPrice());
-                List<ProductOrderInfo> list = order.getOrderInfo();
-                boolean contain = false;
-                for (ProductOrderInfo el : list) {
-                    if (el.getProductId() == product.getId()) {
-                        el.setQuantity(el.getQuantity() + 1);
-                        contain = true;
-                        break;
-                    }
-                }
-                if (!contain) {
-                    list.add(new ProductOrderInfo(product.getId(), 1));
-                }
-            } catch (DBException e) {
-                LOG.debug(e.getMessage());
-            }
-
-            session.setAttribute("basketInfo", BasketInfo.getBasketInfo(order));
-        }
-        resp.sendRedirect(req.getContextPath() + "/mainPage");
     }
 }

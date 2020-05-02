@@ -22,7 +22,7 @@ Menu bar.
         <c:forEach var="category" items="${requestScope.categories}">
             <tr>
                 <td bgcolor="#90ee90">
-                    <a href="${pageContext.request.contextPath}/mainPage?categoryId=${category.id}">${category.name}</a>
+                    <a href="${pageContext.request.contextPath}/products?categoryId=${category.id}">${category.name}</a>
                 </td>
             </tr>
         </c:forEach>

@@ -3,7 +3,6 @@ package ua.nure.sharmenko.finaltask.entities.db;
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.exception.DBException;
-import ua.nure.sharmenko.finaltask.servlets.BasketServlet;
 
 import java.util.ArrayList;
 import java.util.List;

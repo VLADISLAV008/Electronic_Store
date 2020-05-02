@@ -24,7 +24,7 @@ List of roducts.
                     <tr>
                         <td>Price: ${product.price} UAH</td>
                         <c:if test="${product.amount > 0}">
-                            <form action="${pageContext.request.contextPath}/mainPage" method="post">
+                            <form action="${pageContext.request.contextPath}/products" method="post">
                                 <td>
                                     <p style="text-align: center">
                                         <button value="${product.id}" name="productId" type="submit"

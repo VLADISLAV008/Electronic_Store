@@ -1,7 +1,9 @@
 package ua.nure.sharmenko.finaltask.listeners;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Names;
+import ua.nure.sharmenko.finaltask.entities.db.Order;
 import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
 
 import javax.servlet.annotation.WebListener;
@@ -15,9 +17,11 @@ public class MyHttpSessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        LOG.debug("Session created.");
         HttpSession session = se.getSession();
+        LOG.debug("Session id  = " + session.getId() + " created.");
         session.setAttribute("criteriaSortingProducts", new CriteriaSortingProducts());
         session.setAttribute("basketInfo", Names.EMPTY_BASKET);
+        LOG.debug("Create a new order");
+        session.setAttribute("order", new Order());
     }
 }

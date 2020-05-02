@@ -64,16 +64,8 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
+
             session.setAttribute("content", Content.PRODUCTS_CONTENT);
-
-            Order order = (Order) session.getAttribute("order");
-            if (order == null) {
-                LOG.debug("Create a new order");
-                order = new Order();
-                session.setAttribute("order", order);
-            }
-            order.setUserId(user.getId());
-
             resp.sendRedirect(req.getContextPath() + "/mainPage");
             LOG.trace("The user " + user + " is log in.");
         } catch (AppException e) {

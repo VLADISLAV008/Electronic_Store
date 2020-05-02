@@ -27,19 +27,14 @@ public class BasketServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Load categories from db
-        LOG.debug("Try to select categories from DB.");
-        List<Category> categories = Loader.loadCategories();
-        req.setAttribute("categories", categories);
-
         req.getSession().setAttribute("content", Content.BASKET);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("/mainPage").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
         // Load categories from db
         LOG.debug("Try to select categories from DB.");
         List<Category> categories = Loader.loadCategories();
@@ -70,7 +65,6 @@ public class BasketServlet extends HttpServlet {
         }
 
         session.setAttribute("content", Content.BASKET);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.MAIN_PAGE);
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect("/mainPage");
     }
 }

@@ -77,11 +77,10 @@ CREATE TABLE products
 
 CREATE TABLE orders_products
 (
-    orderId   INT UNSIGNED NOT NULL,
+    orderId   INT UNSIGNED NOT NULL REFERENCES orders(id),
     productId INT UNSIGNED NOT NULL,
     amount    INT UNSIGNED NOT NULL,
     PRIMARY KEY (orderId, productId),
-    CONSTRAINT `orderId=id` FOREIGN KEY (orderId) REFERENCES orders (id),
     CONSTRAINT `productId=id` FOREIGN KEY (productId) REFERENCES products (id)
 ) ENGINE = INNODB,
   CHARACTER SET utf8,

@@ -58,17 +58,9 @@ public class SignUpServlet extends HttpServlet {
             DBManager.getInstance().insertUser(user);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            session.setAttribute("content", Content.PRODUCTS_CONTENT);
             LOG.trace("The user " + user + " is signed up.");
 
-            Order order = (Order) session.getAttribute("order");
-            if (order == null) {
-                LOG.debug("Create a new order");
-                order = new Order();
-                session.setAttribute("order", order);
-            }
-            order.setUserId(user.getId());
-
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
             resp.sendRedirect(req.getContextPath() + "/mainPage");
         } catch (DBException e) {
             LOG.debug("Cannot sign up the user " + user + ".");

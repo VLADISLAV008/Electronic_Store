@@ -3,9 +3,7 @@ package ua.nure.sharmenko.finaltask.database;
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Messages;
 import ua.nure.sharmenko.finaltask.constants.Urls;
-import ua.nure.sharmenko.finaltask.entities.db.Category;
-import ua.nure.sharmenko.finaltask.entities.db.Product;
-import ua.nure.sharmenko.finaltask.entities.db.User;
+import ua.nure.sharmenko.finaltask.entities.db.*;
 import ua.nure.sharmenko.finaltask.exception.DBException;
 
 import java.sql.*;
@@ -24,12 +22,6 @@ public final class DBManager {
     private static final Logger LOG = Logger.getLogger(DBManager.class);
     private static DBManager instance;
 /*
-    private static final String SQL_CREATE_TEAM = "INSERT INTO teams VALUES (DEFAULT, ?)";
-    private static final String SQL_GET_USER = "SELECT * FROM users WHERE login=?";
-    private static final String SQL_GET_TEAM_BY_ID = "SELECT * FROM teams WHERE id=?";
-    private static final String SQL_GET_TEAM = "SELECT * FROM teams WHERE name=?";
-    private static final String SQL_INSERT_USER_TEAM = "INSERT INTO users_teams VALUES (?, ?)";
-    private static final String SQL_GET_USER_TEAMS = "SELECT * FROM users_teams WHERE user_id=?";
     private static final String SQL_DELETE_TEAM_FROM_USER_TEAMS = "DELETE FROM users_teams WHERE team_id=?";
     private static final String SQL_DELETE_TEAM = "DELETE FROM teams WHERE id=?";
     private static final String SQL_UPDATE_TEAM = "UPDATE teams SET name=? WHERE id=?";
@@ -137,17 +129,6 @@ public final class DBManager {
         return product;
     }
 
-    private static User extractUser(ResultSet rs) throws SQLException {
-        User user = new User();
-        user.setId(rs.getLong("id"));
-        user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password"));
-        user.setRoleId(rs.getInt("roleId"));
-        user.setName(rs.getString("name"));
-        user.setSurname(rs.getString("surname"));
-        return user;
-    }
-
     public List<Product> selectProductsByCategory(long categoryId) throws DBException {
         LOG.debug("Try to select products by category with id = " + categoryId + " from database.");
         ArrayList<Product> products = new ArrayList<>();
@@ -171,16 +152,6 @@ public final class DBManager {
             close(con, preparedStatement, res);
         }
         return products;
-    }
-
-    private static Product extractProduct(ResultSet rs) throws SQLException {
-        Product product = new Product();
-        product.setId(rs.getLong("id"));
-        product.setName(rs.getString("name"));
-        product.setPrice(rs.getInt("price"));
-        product.setAmount(rs.getInt("amount"));
-        product.setCategoryId(rs.getInt("categoryId"));
-        return product;
     }
 
     public List<Category> selectAllCategories() throws DBException {
@@ -207,11 +178,100 @@ public final class DBManager {
         return categories;
     }
 
-    private static Category extractCategory(ResultSet rs) throws SQLException {
+
+    public void insertOrder(Order order) throws DBException {
+        LOG.debug("Try to insert order to database.");
+        Connection con = null;
+        PreparedStatement prepState = null;
+        ResultSet res = null;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            prepState = con.prepareStatement(SqlQueries.SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
+
+            int j = 1;
+            prepState.setLong(j++, order.getUserId());
+            prepState.setLong(j++, order.getStatusId());
+            prepState.setInt(j++, order.getBill());
+
+            if (prepState.executeUpdate() > 0) {
+                res = prepState.getGeneratedKeys();
+                if (res.next()) {
+                    Long orderId = res.getLong(1);
+                    order.setId(orderId);
+                }
+            }
+
+            LOG.debug("Try to insert ordered products to database.");
+            List<ProductOrderInfo> list = order.getOrderInfo();
+            for (ProductOrderInfo p : list) {
+                insertOrderProduct(order.getId(), p, con);
+            }
+
+            con.commit();
+            LOG.debug("Commit completed successfully.");
+        } catch (SQLException e) {
+            rollback(con);
+
+            LOG.error(Messages.ERR_CANNOT_PLACE_ORDER);
+            LOG.error(e.getMessage());
+            throw new DBException(Messages.ERR_CANNOT_PLACE_ORDER, e);
+        } finally {
+            close(con, prepState, res);
+        }
+    }
+
+    private void insertOrderProduct(Long orderId, ProductOrderInfo product, Connection con) throws SQLException {
+        PreparedStatement pstmt = con.prepareStatement(SqlQueries.SQL_INSERT_ORDER_PRODUCT);
+        int i = 1;
+        pstmt.setLong(i++, orderId);
+        pstmt.setLong(i++, product.getProductId());
+        pstmt.setInt(i++, product.getQuantity());
+        pstmt.executeUpdate();
+        pstmt.close();
+    }
+
+    private User extractUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getLong("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setRoleId(rs.getInt("roleId"));
+        user.setName(rs.getString("name"));
+        user.setSurname(rs.getString("surname"));
+        return user;
+    }
+
+    private Product extractProduct(ResultSet rs) throws SQLException {
+        Product product = new Product();
+        product.setId(rs.getLong("id"));
+        product.setName(rs.getString("name"));
+        product.setPrice(rs.getInt("price"));
+        product.setAmount(rs.getInt("amount"));
+        product.setCategoryId(rs.getInt("categoryId"));
+        return product;
+    }
+
+    private Category extractCategory(ResultSet rs) throws SQLException {
         Category category = new Category();
         category.setId(rs.getLong("id"));
         category.setName(rs.getString("name"));
         return category;
+    }
+
+    /**
+     * Rollbacks a connection.
+     *
+     * @param con Connection to be rollbacked.
+     */
+    private void rollback(Connection con) {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                LOG.error("Error performing rollback transaction", ex);
+            }
+        }
     }
 
     /**
