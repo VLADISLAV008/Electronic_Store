@@ -2,7 +2,6 @@ package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Content;
-import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.Loader;
 import ua.nure.sharmenko.finaltask.entities.db.Category;
 import ua.nure.sharmenko.finaltask.entities.db.Order;
@@ -10,7 +9,6 @@ import ua.nure.sharmenko.finaltask.entities.db.Product;
 import ua.nure.sharmenko.finaltask.entities.db.ProductOrderInfo;
 import ua.nure.sharmenko.finaltask.entities.web.BasketInfo;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

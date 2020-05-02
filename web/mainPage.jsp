@@ -21,11 +21,11 @@
         <td width="100%"></td>
     </tr>
     <tr>
-        <td bgcolor="#f0f8ff" valign="top">
+        <td bgcolor="#f0f8ff" valign="top" width="20%">
             <!-- categories table -->
             <%@ include file="/WEB-INF/jspf/categories.jspf" %>
         </td>
-        <td bgcolor="#f0ffff" valign="center" width="100%">
+        <td bgcolor="#f0ffff" valign="center" width="80%">
             <jsp:useBean id="Content" scope="application" class="ua.nure.sharmenko.finaltask.constants.Content"/>
 
             <c:if test="${sessionScope.content.equals(Content.LOGIN)}">
@@ -49,8 +49,13 @@
             </c:if>
 
             <c:if test="${sessionScope.content.equals(Content.placeOrderResultContent)}">
-                <!-- basket content -->
+                <!-- result of place an order content -->
                 <%@ include file="/WEB-INF/jspf/placeOrderResult.jspf" %>
+            </c:if>
+
+            <c:if test="${sessionScope.content.equals(Content.PROFILE)}">
+                <!-- profile content -->
+                <%@ include file="/WEB-INF/jspf/profile.jspf" %>
             </c:if>
         </td>
     </tr>

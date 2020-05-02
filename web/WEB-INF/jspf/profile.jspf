@@ -1,0 +1,35 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<table width="100%" cellpadding="15">
+    <tr>
+        <td align="center" colspan="3"><h1>Profile</h1></td>
+    </tr>
+    <tr>
+        <td align="center" colspan="3">
+            <table cellspacing="10">
+                <tr>
+                    <form action="${pageContext.request.contextPath}/profile">
+                        <td><button value="info" name="content" style="background-color: cornflowerblue" >Profile info</button></td>
+                        <td><button value="orders" name="content" style="background-color: cornflowerblue">Orders</button></td>
+                    </form>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>E-mail:</td>
+        <td><c:out value="${sessionScope.user.email}"/></td>
+        <td width="50%"></td>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td><c:out value="${sessionScope.user.name}"/></td>
+        <td width="50%"></td>
+    </tr>
+    <tr>
+        <td>Surname:</td>
+        <td><c:out value="${sessionScope.user.surname}"/></td>
+        <td width="50%"></td>
+    </tr>
+</table>

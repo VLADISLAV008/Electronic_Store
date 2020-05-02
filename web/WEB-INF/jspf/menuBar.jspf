@@ -6,7 +6,7 @@ Menu bar.
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <div>
-    <table border="0" cellspacing="10" cellpadding="7">
+    <table cellspacing="10" cellpadding="7">
         <tr bgcolor="#6495ed">
             <td>
                 Total products: ${requestScope.products.size()}

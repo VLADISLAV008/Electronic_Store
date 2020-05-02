@@ -3,14 +3,9 @@ package ua.nure.sharmenko.finaltask.servlets;
 import org.apache.log4j.Logger;
 import ua.nure.sharmenko.finaltask.constants.Content;
 import ua.nure.sharmenko.finaltask.constants.Path;
-import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.database.Loader;
 import ua.nure.sharmenko.finaltask.entities.db.*;
-import ua.nure.sharmenko.finaltask.entities.web.BasketInfo;
-import ua.nure.sharmenko.finaltask.entities.web.CriteriaSortingProducts;
-import ua.nure.sharmenko.finaltask.exception.DBException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 
 @WebServlet("/mainPage")
@@ -40,6 +34,9 @@ public class MainPageServlet extends HttpServlet {
             session.setAttribute("content", Content.PRODUCTS_CONTENT);
             content = Content.PRODUCTS_CONTENT;
         }
+
+        LOG.debug("Main page content = " + content);
+
         if (Content.PRODUCTS_CONTENT.equals(content)) {
             req.getRequestDispatcher("/products").forward(req, resp);
         } else {

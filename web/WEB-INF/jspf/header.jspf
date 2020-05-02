@@ -32,8 +32,12 @@ Header (top area).
                         ${sessionScope.user.email}
                 </td>
                 <td>
+                    <a href="${pageContext.request.contextPath}/profile">Profile</a>
+                </td>
+                <td>
                     <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 </td>
+
             </c:if>
             <c:if test="${empty sessionScope.user}">
                 <!-- buttons holder -->

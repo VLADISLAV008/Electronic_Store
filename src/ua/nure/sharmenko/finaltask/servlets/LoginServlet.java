@@ -7,7 +7,6 @@ import ua.nure.sharmenko.finaltask.constants.Path;
 import ua.nure.sharmenko.finaltask.database.DBManager;
 import ua.nure.sharmenko.finaltask.database.Loader;
 import ua.nure.sharmenko.finaltask.entities.db.Category;
-import ua.nure.sharmenko.finaltask.entities.db.Order;
 import ua.nure.sharmenko.finaltask.entities.db.User;
 import ua.nure.sharmenko.finaltask.exception.AppException;
 

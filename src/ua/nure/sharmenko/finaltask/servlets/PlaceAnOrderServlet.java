@@ -61,6 +61,9 @@ public class PlaceAnOrderServlet extends HttpServlet {
                 }
                 req.setAttribute("placeOrderResult", placeOrderResult);
                 session.setAttribute("content", Content.PLACE_ORDER_RESULT_CONTENT);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/mainPage");
+                return;
             }
         }
         req.getRequestDispatcher(Path.MAIN_PAGE).forward(req, resp);

@@ -6,6 +6,11 @@ public final class Content {
     public static final String PRODUCTS_CONTENT = "productsContent";
     public static final String BASKET = "basket";
     public static final String PLACE_ORDER_RESULT_CONTENT = "placeOrderResultContext";
+    public static final String PROFILE = "profile";
+
+    public String getPROFILE() {
+        return PROFILE;
+    }
 
     public String getPlaceOrderResultContent() {
         return PLACE_ORDER_RESULT_CONTENT;
