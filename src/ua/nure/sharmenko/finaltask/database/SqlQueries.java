@@ -14,4 +14,5 @@ public final class SqlQueries {
     public static final String SQL_SELECT_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
     public static final String SQL_INSERT_ORDER = "INSERT INTO orders VALUES (DEFAULT, ?, ?, ?)";
     public static final String SQL_INSERT_ORDER_PRODUCT = "INSERT INTO orders_products VALUES (?, ?, ?)";
+    public static final String SQL_SELECT_ORDERS_BY_USER_ID = "SELECT * FROM orders WHERE userId=?";
 }

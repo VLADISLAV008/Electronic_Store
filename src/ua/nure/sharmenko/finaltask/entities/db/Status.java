@@ -3,8 +3,10 @@ package ua.nure.sharmenko.finaltask.entities.db;
 public enum Status {
     REGISTERED, PAID, CANCELED;
 
-    public static Status getOrderStatus(Order order) {
-        long statusId = order.getStatusId();
+    Status() {
+    }
+
+    public static Status getOrderStatus(long statusId) {
         return Status.values()[(int) statusId - 1];
     }
 

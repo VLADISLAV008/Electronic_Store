@@ -35,4 +35,6 @@ public final class Messages {
     public static final String ERR_CANNOT_PLACE_ORDER = "Sorry, an error occurred while placing your order.";
 
     public static final String SUCCESSFUL_PLACE_ORDER = "The order is placed successfully. Thank you for your purchase!";
+
+    public static final String ERR_CANNOT_SELECT_ORDERS = "Sorry, an error occurred while selecting your orders.";
 }

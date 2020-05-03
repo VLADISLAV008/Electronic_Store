@@ -212,7 +212,6 @@ public final class DBManager {
             LOG.debug("Commit completed successfully.");
         } catch (SQLException e) {
             rollback(con);
-
             LOG.error(Messages.ERR_CANNOT_PLACE_ORDER);
             LOG.error(e.getMessage());
             throw new DBException(Messages.ERR_CANNOT_PLACE_ORDER, e);
@@ -229,6 +228,48 @@ public final class DBManager {
         pstmt.setInt(i++, product.getQuantity());
         pstmt.executeUpdate();
         pstmt.close();
+    }
+
+    public List<Order> selectUserOrders(long userId) throws DBException {
+        LOG.debug("Try to select all orders by userId = " + userId + " from database.");
+        ArrayList<Order> orders = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement prepState = null;
+        ResultSet res = null;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            prepState = con.prepareStatement(SqlQueries.SQL_SELECT_ORDERS_BY_USER_ID);
+            prepState.setLong(1, userId);
+            res = prepState.executeQuery();
+
+            while (res.next()) {
+                // Select productOrderInfo
+
+                Order order = extractOrder(res);
+                orders.add(order);
+            }
+
+            con.commit();
+            LOG.debug("Commit completed successfully.");
+        } catch (SQLException ex) {
+            rollback(con);
+            LOG.error(Messages.ERR_CANNOT_SELECT_ORDERS);
+            LOG.error(ex.getMessage());
+            throw new DBException(Messages.ERR_CANNOT_SELECT_ORDERS, ex);
+        } finally {
+            close(con, prepState, res);
+        }
+        return orders;
+    }
+
+    private Order extractOrder(ResultSet rs) throws SQLException {
+        Order order = new Order();
+        order.setId(rs.getLong("id"));
+        order.setUserId(rs.getLong("userId"));
+        order.setStatusId(rs.getLong("statusId"));
+        order.setBill(rs.getInt("bill"));
+        return order;
     }
 
     private User extractUser(ResultSet rs) throws SQLException {

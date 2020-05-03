@@ -47,6 +47,10 @@ public class Order extends Entity {
         this.statusId = statusId;
     }
 
+    public String getStatus() {
+        return Status.getOrderStatus(statusId).getName();
+    }
+
     public Long getUserId() {
         return userId;
     }
