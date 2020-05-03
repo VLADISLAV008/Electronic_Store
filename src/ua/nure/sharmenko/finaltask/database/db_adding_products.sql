@@ -1,13 +1,13 @@
-INSERT INTO products VALUES (DEFAULT, 'Traveller', 25, 1, 1);
+INSERT INTO products VALUES (DEFAULT, 'Traveller', 25, TRUE, 1);
 
 INSERT INTO products
-VALUES (DEFAULT, 'Hawk-boy', 80, 1, 1);
+VALUES (DEFAULT, 'Hawk-boy', 80, TRUE, 1);
 
 INSERT INTO products
-VALUES (DEFAULT, 'Bjorn Steelblood', 40, 1, 1);
+VALUES (DEFAULT, 'Bjorn Steelblood', 40, TRUE, 1);
 
 INSERT INTO products
-VALUES (DEFAULT, 'Dragon Knights', 90, 1, 1);
+VALUES (DEFAULT, 'Dragon Knights', 90, TRUE, 1);
 
 INSERT INTO products
-VALUES (DEFAULT, 'Gear', 20, 1, 2);
+VALUES (DEFAULT, 'Gear', 20, TRUE, 2);

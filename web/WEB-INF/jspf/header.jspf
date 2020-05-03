@@ -31,6 +31,11 @@ Header (top area).
                 <td>
                         ${sessionScope.user.email}
                 </td>
+                <c:if test="${\"admin\".equals(sessionScope.user.role)}">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/admin">Control</a>
+                    </td>
+                </c:if>
                 <td>
                     <a href="${pageContext.request.contextPath}/profile">Profile</a>
                 </td>

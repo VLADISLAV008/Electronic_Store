@@ -8,6 +8,7 @@ public final class SqlQueries {
      * SQL queries
      */
     public static final String SQL_INSERT_USER = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+    public static final String SQL_INSERT_PRODUCT = "INSERT INTO products VALUES (DEFAULT, ?, ?, ?, ?)";
     public static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
     public static final String SQL_SELECT_PRODUCTS_BY_CATEGORY = "SELECT * FROM products WHERE categoryId=?";
     public static final String SQL_SELECT_ALL_CATEGORIES = "SELECT * FROM categories";

@@ -64,7 +64,7 @@ public final class DBManager {
             int i = 1;
             prepState.setString(i++, user.getEmail());
             prepState.setString(i++, user.getPassword());
-            prepState.setString(i++, Integer.toString(user.getRoleId()));
+            prepState.setInt(i++, user.getRoleId());
             prepState.setString(i++, user.getName());
             prepState.setString(i++, user.getSurname());
 
@@ -78,6 +78,37 @@ public final class DBManager {
         } catch (SQLException ex) {
             LOG.error(Messages.ERR_CANNOT_ADD_USER, ex);
             throw new DBException(Messages.ERR_CANNOT_ADD_USER, ex);
+        } finally {
+            close(con, prepState, null);
+        }
+    }
+
+    public void insertProduct(Product product) throws DBException {
+        LOG.debug("Try to insert product " + product + " to database.");
+        Connection con = null;
+        PreparedStatement prepState = null;
+
+        try {
+            con = getConnection();
+            prepState = con.prepareStatement(SqlQueries.SQL_INSERT_PRODUCT,
+                    Statement.RETURN_GENERATED_KEYS);
+
+            int i = 1;
+            prepState.setString(i++, product.getName());
+            prepState.setInt(i++, product.getPrice());
+            prepState.setBoolean(i++, product.getAvailable());
+            prepState.setLong(i++, product.getCategoryId());
+
+            if (prepState.executeUpdate() > 0) {
+                ResultSet rs = prepState.getGeneratedKeys();
+                if (rs.next()) {
+                    Long productId = rs.getLong(1);
+                    product.setId(productId);
+                }
+            }
+        } catch (SQLException ex) {
+            LOG.error(Messages.ERR_CANNOT_ADD_PRODUCT);
+            throw new DBException(Messages.ERR_CANNOT_ADD_PRODUCT, ex);
         } finally {
             close(con, prepState, null);
         }
@@ -288,7 +319,7 @@ public final class DBManager {
         product.setId(rs.getLong("id"));
         product.setName(rs.getString("name"));
         product.setPrice(rs.getInt("price"));
-        product.setAmount(rs.getInt("amount"));
+        product.setAvailable(rs.getBoolean("available"));
         product.setCategoryId(rs.getInt("categoryId"));
         return product;
     }

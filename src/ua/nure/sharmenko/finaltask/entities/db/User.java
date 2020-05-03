@@ -64,6 +64,10 @@ public class User extends Entity {
         this.roleId = roleId;
     }
 
+    public String getRole() {
+        return Role.getUserRole(roleId).getName();
+    }
+
     public String getName() {
         return name;
     }

@@ -8,7 +8,7 @@
 
 <body>
 
-<c:if test="${empty sessionScope.content}">
+<c:if test="${empty sessionScope.content or empty requestScope.categories}">
     <c:redirect url="/mainPage"/>
 </c:if>
 
@@ -56,6 +56,11 @@
             <c:if test="${sessionScope.content.equals(Content.PROFILE)}">
                 <!-- profile content -->
                 <%@ include file="/WEB-INF/jspf/profile.jspf" %>
+            </c:if>
+
+            <c:if test="${sessionScope.content.equals(Content.adminControl)}">
+                <!-- admin content -->
+                <%@ include file="/WEB-INF/jspf/admin/adminControl.jspf" %>
             </c:if>
         </td>
     </tr>

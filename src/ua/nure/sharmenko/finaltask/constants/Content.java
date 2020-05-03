@@ -7,6 +7,11 @@ public final class Content {
     public static final String BASKET = "basket";
     public static final String PLACE_ORDER_RESULT_CONTENT = "placeOrderResultContext";
     public static final String PROFILE = "profile";
+    public static final String ADMIN_CONTROL = "admin";
+
+    public String getAdminControl() {
+        return ADMIN_CONTROL;
+    }
 
     public String getPROFILE() {
         return PROFILE;

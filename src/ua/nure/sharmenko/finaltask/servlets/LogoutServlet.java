@@ -1,6 +1,7 @@
 package ua.nure.sharmenko.finaltask.servlets;
 
 import org.apache.log4j.Logger;
+import ua.nure.sharmenko.finaltask.constants.Content;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +22,12 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         LOG.debug("Remove attribute from session");
         session.removeAttribute("user");
+
+        String content = (String) session.getAttribute("content");
+        if(Content.ADMIN_CONTROL.equals(content))
+        {
+            session.setAttribute("content", Content.PRODUCTS_CONTENT);
+        }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/mainPage");
         requestDispatcher.forward(req, resp);

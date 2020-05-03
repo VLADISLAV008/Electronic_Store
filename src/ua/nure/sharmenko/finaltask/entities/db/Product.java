@@ -5,7 +5,7 @@ public class Product extends Entity {
 
     private String name;
     private Integer price;
-    private Integer amount;
+    private Boolean available;
     private Integer categoryId;
 
     public Product() {
@@ -27,19 +27,29 @@ public class Product extends Entity {
         this.price = price;
     }
 
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
     public Integer getCategoryId() {
         return categoryId;
     }
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", available=" + available +
+                ", categoryId=" + categoryId +
+                '}';
     }
 }

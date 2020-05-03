@@ -18,6 +18,8 @@ public final class Messages {
 
     public static final String ERR_CANNOT_ADD_USER = "A user with this email already exists.";
 
+    public static final String ERR_CANNOT_ADD_PRODUCT = "Cannot add product to database.";
+
     public static final String ERR_CANNOT_OBTAIN_CONNECTION = "Cannot obtain a connection from the pool.";
 
     public static final String ERR_LOGIN_OR_PASSWORD_EMPTY = "Login/password cannot be empty.";
@@ -37,4 +39,8 @@ public final class Messages {
     public static final String SUCCESSFUL_PLACE_ORDER = "The order is placed successfully. Thank you for your purchase!";
 
     public static final String ERR_CANNOT_SELECT_ORDERS = "Sorry, an error occurred while selecting your orders.";
+
+    public static final String ERR_FAILED_ADD_PRODUCT = "Failed to add product.";
+
+    public static final String SUCCESSFUL_ADD_PRODUCT = "Product added successfully.";
 }

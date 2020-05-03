@@ -67,7 +67,7 @@ CREATE TABLE products
     id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name       VARCHAR(30)  NOT NULL UNIQUE,
     price      INT UNSIGNED NOT NULL,
-    amount     INT UNSIGNED DEFAULT 0,
+    available  BOOLEAN DEFAULT TRUE,
     categoryId INT UNSIGNED NOT NULL,
     CONSTRAINT `categoryId=id` FOREIGN KEY (categoryId) REFERENCES categories (id),
     PRIMARY KEY (id)
@@ -77,7 +77,7 @@ CREATE TABLE products
 
 CREATE TABLE orders_products
 (
-    orderId   INT UNSIGNED NOT NULL REFERENCES orders(id),
+    orderId   INT UNSIGNED NOT NULL REFERENCES orders (id),
     productId INT UNSIGNED NOT NULL,
     amount    INT UNSIGNED NOT NULL,
     PRIMARY KEY (orderId, productId),

@@ -23,7 +23,7 @@ List of roducts.
                     </tr>
                     <tr>
                         <td>Price: ${product.price} UAH</td>
-                        <c:if test="${product.amount > 0}">
+                        <c:if test="${product.available}">
                             <form action="${pageContext.request.contextPath}/products" method="post">
                                 <td>
                                     <p style="text-align: center">
@@ -39,11 +39,11 @@ List of roducts.
                         </c:if>
                     </tr>
                     <tr>
-                        <td>Size:</td>
-                        <c:if test="${product.amount > 0}">
+                        <td>Custom size</td>
+                        <c:if test="${product.available}">
                             <td>Are available</td>
                         </c:if>
-                        <c:if test="${product.amount == 0}">
+                        <c:if test="${!product.available}">
                             <td> Not available</td>
                         </c:if>
                     </tr>

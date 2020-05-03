@@ -5,36 +5,20 @@
     <form action="${pageContext.request.contextPath}/signUp" method="post">
         <table border="0">
             <tr>
-                <td>
-                    Email:
-                </td>
-                <td>
-                    <input type="text" name="email"><br/>
-                </td>
+                <td>Email:</td>
+                <td><input type="text" name="email"><br/></td>
             </tr>
             <tr>
-                <td>
-                    Password:
-                </td>
-                <td>
-                    <input type="password" name="pass"><br/>
-                </td>
+                <td>Password:</td>
+                <td><input type="password" name="pass"><br/></td>
             </tr>
             <tr>
-                <td>
-                    Name:
-                </td>
-                <td>
-                    <input type="text" name="name"><br/>
-                </td>
+                <td>Name:</td>
+                <td><input type="text" name="name"><br/></td>
             </tr>
             <tr>
-                <td>
-                    Surname:
-                </td>
-                <td>
-                    <input type="text" name="surname"><br/>
-                </td>
+                <td>Surname:</td>
+                <td><input type="text" name="surname"><br/></td>
             </tr>
             <tr>
                 <td colspan="2" valign="center">

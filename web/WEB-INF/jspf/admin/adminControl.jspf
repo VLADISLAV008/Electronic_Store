@@ -1,0 +1,9 @@
+<%--===========================================================================
+Admin Control
+===========================================================================--%>
+
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<!-- add product content -->
+<%@ include file="/WEB-INF/jspf/admin/addProduct.jspf" %>

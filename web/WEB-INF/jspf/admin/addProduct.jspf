@@ -1,0 +1,51 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<div>   <!-- content -->
+    <form action="${pageContext.request.contextPath}/admin" method="post">
+        <table border="0">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td><input type="number" name="price"/></td>
+                <td>${Names.CURRENCY}</td>
+            </tr>
+            <tr>
+                <td>Available:</td>
+                <td>
+                    <select name="available">
+                        <option selected value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Category:</td>
+                <td>
+                    <select name="category">
+                        <option selected value="null">Choose here</option>
+                        <c:forEach var="category" items="${requestScope.categories}">
+                            <option value="${category.id}">${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3" valign="center">
+                    <button type="submit">Add product</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <c:if test="${not empty sessionScope.resultAddProduct}">
+        <div>
+            <h1>${sessionScope.resultAddProduct}</h1>
+        </div>
+    </c:if>
+</div>

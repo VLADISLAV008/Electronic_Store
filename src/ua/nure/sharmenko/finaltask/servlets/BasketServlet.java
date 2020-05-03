@@ -63,6 +63,6 @@ public class BasketServlet extends HttpServlet {
         }
 
         session.setAttribute("content", Content.BASKET);
-        resp.sendRedirect("/mainPage");
+        resp.sendRedirect(req.getContextPath() + "/mainPage");
     }
 }

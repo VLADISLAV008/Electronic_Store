@@ -42,8 +42,5 @@ public class MainPageServlet extends HttpServlet {
         } else {
             req.getRequestDispatcher(Path.MAIN_PAGE).forward(req, resp);
         }
-
-        System.out.println(Status.class.getName());
-
     }
 }
