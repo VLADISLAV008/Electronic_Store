@@ -52,6 +52,22 @@
                                 <c:out value="${order.status}"/>
                             </td>
                         </tr>
+                        <c:forEach var="orderedProduct" items="${order.orderInfo}">
+                            <tr>
+                                <c:set var="productId" value="${orderedProduct.productId}"/>
+                                <c:set var="product" scope="request"
+                                       value="${sessionScope.order.getProductById(productId)}"/>
+                                <td align="center">
+                                    <img src="${pageContext.request.contextPath}/resources/productPictures/${productId}.PNG"
+                                         alt="image.png" width="130" height="130"/>
+                                </td>
+                                <td align="center"><c:out value="${product.name}"/></td>
+                                <td align="center"><c:out value="${orderedProduct.quantity}"/></td>
+                                <td align="center"><c:out value="${product.price} ${Names.CURRENCY}"/></td>
+                                <td align="center"><c:out
+                                        value="${product.price*orderedProduct.quantity} ${Names.CURRENCY}"/></td>
+                            </tr>
+                        </c:forEach>
                         <tr>
                             <td>Bill:
                                 <c:out value="${order.bill}"/>
