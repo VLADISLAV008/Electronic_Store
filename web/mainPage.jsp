@@ -26,7 +26,7 @@
             <%@ include file="/WEB-INF/jspf/categories.jspf" %>
         </td>
         <td bgcolor="#f0ffff" valign="center" width="80%">
-            <jsp:useBean id="Content" scope="application" class="ua.nure.sharmenko.finaltask.constants.Content"/>
+            <jsp:useBean id="Content" scope="application" class="controller.constants.Content"/>
 
             <c:if test="${sessionScope.content.equals(Content.LOGIN)}">
                 <!-- login content -->
@@ -68,4 +68,3 @@
 
 </body>
 </html>
-

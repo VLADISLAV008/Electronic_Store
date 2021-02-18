@@ -23,4 +23,9 @@ public class MyHttpSessionListener implements HttpSessionListener {
         LOG.debug("Create a new order");
         session.setAttribute("order", new Order());
     }
+
+    @Override
+    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+
+    }
 }

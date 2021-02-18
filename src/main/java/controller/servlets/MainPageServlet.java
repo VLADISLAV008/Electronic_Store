@@ -5,7 +5,6 @@ import controller.constants.Path;
 import controller.entities.db.Category;
 import org.apache.log4j.Logger;
 import controller.database.Loader;
-import ua.nure.sharmenko.finaltask.entities.db.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

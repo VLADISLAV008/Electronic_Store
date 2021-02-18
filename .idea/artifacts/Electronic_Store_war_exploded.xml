@@ -2,18 +2,15 @@
   <artifact type="exploded-war" name="Electronic Store:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/Electronic_Store_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="Electronic Store/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Electronic Store" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="mysql-connector-java-8.0.19" />
-          <element id="library" level="project" name="log4j:apache-log4j-extras:1.2.17" />
-          <element id="library" level="project" name="jstl:jstl:1.2" />
           <element id="library" level="project" name="log4j:log4j:1.2.17" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="Electronic Store/web/Web" />
     </root>
   </artifact>
 </component>

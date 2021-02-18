@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        <jsp:useBean id="Names" scope="application" class="ua.nure.sharmenko.finaltask.constants.Names"/>
+        <jsp:useBean id="Names" scope="application" class="controller.constants.Names"/>
         <c:out value="${Names.title}"/>
     </title>
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DB manager. Works with Apache Derby DB. Only the required DAO methods are
+ * DB manager. Only the required DAO methods are
  * defined!
  *
  * @author V.Shramenko
